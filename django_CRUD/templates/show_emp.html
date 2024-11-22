@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+  <!-- Datatable plugin CSS file -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+  <title>Home</title>
+  <style>
+    h1 {
+      border: 2px solid black;
+      margin: 2px;
+    }
+
+    .navbar-nav .nav-item .nav-link:hover {
+      color: #0056b3;
+      background-color: #EEF7FF;
+    }
+
+    #logout {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin: 10px;
+    }
+
+    #logout .btn-logout {
+      background-color: #dc3545;  /* Red background */
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    #logout .btn-logout:hover {
+      background-color: #c82333;  /* Darker red on hover */
+    }
+
+    #add {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin: 10px;
+    }
+
+    #add .btn-add {
+      background-color: #dc3545;  /* Red background */
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    #add .btn-add:hover {
+      background-color: #c82333;  /* Darker red on hover */
+    }
+
+    .table th, .table td {
+      text-align: center;
+    }
+
+    .cart-body {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+ 
+  
+
+  <center><h3 style="background-color: crimson;">ALL EMPLOYEES</h3></center>
+  <!-- Logout button -->
+  <div id="add">
+    <a href="{% url 'add_emp' %}">
+      <button class="btn-add">Add Employee</button>
+    </a>
+  </div>
+  <div id="logout">
+    <a href="{% url 'logout' %}">
+      <button class="btn-logout">Logout</button>
+    </a>
+  </div>
+  <div class="container">
+    <div class="row" style="padding: 10px;">
+      <div class="col-md-12">
+        <div class="cart">
+          <div class="cart-body">
+            <table class="table" id="tableID">
+              <thead>
+                <tr>
+                  <th>Sr.No</th>
+                  <th>Emp Image</th>
+                  <th>Emp Name</th>
+                  <th>Emp Dept</th>
+                  <th>Emp Email</th>
+                  <th>Emp Address</th>
+                  <th>Delete/Update</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in emp_data %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                    {% if i.emp_img %}
+                      <img src="{{ i.emp_img.url }}" height="50px" width="50px">
+                    {% else %}
+                      <span>No Image</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ i.emp_name }}</td>
+                  <td>{{ i.emp_dept }}</td>
+                  <td>{{ i.emp_email }}</td>
+                  <td>{{ i.emp_add }}</td>
+
+                  <td>
+                    <button type="button" class="btn btn-danger"><a href="/delete_emp/{{ i.id }}" style="color: white;">Delete</a></button>
+                    <button type="button" class="btn btn-success"><a href="/do_update/{{ i.id }}" style="color: white;">Update</a></button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- jQuery library file -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <!-- Datatable plugin JS library file -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    /* Initialization of datatable */
+    $(document).ready(function() {
+      $('#tableID').DataTable();
+    });
+  </script>
